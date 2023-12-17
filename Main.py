@@ -9,34 +9,23 @@ cap.set(10, 160)  # Setting property 10 (brightness) to a value of 160
 heightImg = 640  # Setting the height of the image
 widthImg = 480  # Setting the width of the image
 
-# Initializing trackbars
 utlis.initializeTrackbars()
 
-count = 0  # Initializing a counter variable
-
-# Looping indefinitely
+count = 0  
 while True:
-    # Capturing an image either from webcam or file
+  
     if webCamFeed:
-        success, img = cap.read()  # Capture a frame from the webcam
-    else:
-        img = cv2.imread(pathImage)  # Read an image from a file
+        success, img = cap.read()     else:
+        img = cv2.imread(pathImage) 
 
-    img = cv2.resize(img, (widthImg, heightImg))  # Resize the image to specified dimensions
+    img = cv2.resize(img, (widthImg, heightImg))  
 
-    # Creating a blank image
     imgBlank = np.zeros((heightImg, widthImg, 3), np.uint8)
 
-    # Converting the image to grayscale
     imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-
-    # Applying Gaussian blur to the grayscale image
     imgBlur = cv2.GaussianBlur(imgGray, (5, 5), 1)
-
-    # Getting threshold values from trackbars
     thres = utlis.valTrackbars()
 
-    # Applying Canny edge detection
     imgThreshold = cv2.Canny(imgBlur, thres[0], thres[1])
 
     # Creating a kernel for morphological operations
